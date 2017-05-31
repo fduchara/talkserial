@@ -2,26 +2,26 @@ package main
 
 import (
 	"github.com/tarm/serial"
-//	"log"
+	//	"log"
 	"flag"
+	"fmt"
 	"strings"
 	"time"
-	"fmt"
+//	"strconv"
 )
-
 
 func main() {
 
-	serialdevice, atcommand := ReadFlags()
+	serialdevice, atcommand, timeout := ReadFlags()
 
-	c := &serial.Config{Name: serialdevice, Baud: 115200, ReadTimeout: time.Millisecond * 10}
+	c := &serial.Config{Name: serialdevice, Baud: 115200, ReadTimeout: timeout}
 	s, _ := serial.OpenPort(c)
 
 	buf := make([]byte, 1)
 
 	n, _ := s.Write([]byte("AT^CURC=0\r"))
 	n, _ = s.Read(buf)
-	n, _ = s.Write([]byte(atcommand+"\r"))
+	n, _ = s.Write([]byte(atcommand + "\r"))
 
 	ret := string("")
 	for {
@@ -39,10 +39,10 @@ func main() {
 
 }
 
-
-func ReadFlags() (comport string, command string) { // читаю аргументы вызова программы. Возвращаю строчку с именем файла.
+func ReadFlags() (string, string, time.Duration) { // читаю аргументы вызова программы. Возвращаю строчку с именем файла.
 	ConfigDevIn := flag.String("d", "/dev/ttyUSB1", "serial device") // читаем переданные параметры.
-	ConfigCommandIn := flag.String("c", "ATI", "AT command") // читаем переданные параметры.
-	flag.Parse()                                                              // парсим параметры
-	return *ConfigDevIn, *ConfigCommandIn
+	ConfigCommandIn := flag.String("c", "ATI", "AT command")         // читаем переданные параметры.
+	ConfigReadTimeoutIn := flag.Duration("t", 100000000, "read timeout mc")         // читаем переданные параметры.
+	flag.Parse()                                                     // парсим параметры
+	return *ConfigDevIn, *ConfigCommandIn, *ConfigReadTimeoutIn
 }
