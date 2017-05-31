@@ -1,13 +1,11 @@
 package main
 
 import (
-	"github.com/tarm/serial"
-	//	"log"
 	"flag"
 	"fmt"
+	"github.com/tarm/serial"
 	"strings"
 	"time"
-//	"strconv"
 )
 
 func main() {
@@ -20,7 +18,7 @@ func main() {
 	buf := make([]byte, 1)
 
 	n, _ := s.Read(buf)
-//	n, _ = s.Write([]byte("AT^CURC=0\r")) // отключение лога модема.
+	//	n, _ = s.Write([]byte("AT^CURC=0\r")) // отключение лога модема.
 	n, _ = s.Write([]byte(atcommand + "\r"))
 
 	ret := string("")
@@ -36,13 +34,12 @@ func main() {
 	}
 
 	fmt.Printf(ret)
-
 }
 
 func ReadFlags() (string, string, time.Duration) { // читаю аргументы вызова программы. Возвращаю строчку с именем файла.
-	ConfigDevIn := flag.String("d", "/dev/ttyUSB1", "serial device") // читаем переданные параметры.
-	ConfigCommandIn := flag.String("c", "ATI", "AT command")         // читаем переданные параметры.
-	ConfigReadTimeoutIn := flag.Duration("t", 100000000, "read timeout mc")         // читаем переданные параметры.
-	flag.Parse()                                                     // парсим параметры
+	ConfigDevIn := flag.String("d", "/dev/ttyUSB1", "serial device")        // читаем переданные параметры.
+	ConfigCommandIn := flag.String("c", "ATI", "AT command")                // читаем переданные параметры.
+	ConfigReadTimeoutIn := flag.Duration("t", 100000000, "read timeout mc") // 100ms
+	flag.Parse()                                                            // парсим параметры
 	return *ConfigDevIn, *ConfigCommandIn, *ConfigReadTimeoutIn
 }
