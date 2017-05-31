@@ -19,8 +19,8 @@ func main() {
 
 	buf := make([]byte, 1)
 
-	n, _ := s.Write([]byte("AT^CURC=0\r"))
-	n, _ = s.Read(buf)
+	n, _ := s.Read(buf)
+//	n, _ = s.Write([]byte("AT^CURC=0\r")) // отключение лога модема.
 	n, _ = s.Write([]byte(atcommand + "\r"))
 
 	ret := string("")
