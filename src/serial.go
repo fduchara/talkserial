@@ -39,7 +39,7 @@ func main() {
 func ReadFlags() (string, string, time.Duration) { // читаю аргументы вызова программы. Возвращаю строчку с именем файла.
 	ConfigDevIn := flag.String("d", "/dev/ttyUSB1", "serial device")        // читаем переданные параметры.
 	ConfigCommandIn := flag.String("c", "ATI", "AT command")                // читаем переданные параметры.
-	ConfigReadTimeoutIn := flag.Duration("t", 100000000, "read timeout mc") // 100ms
+	ConfigReadTimeoutIn := flag.Duration("t", 100000000, "read timeout. example: 100ms") // 100ms
 	flag.Parse()                                                            // парсим параметры
 	return *ConfigDevIn, *ConfigCommandIn, *ConfigReadTimeoutIn
 }

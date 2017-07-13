@@ -15,4 +15,7 @@ build:
 	go build -v -o bin/talkserial-linux64 src/*.go
 
 release:
-	env GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=0 go build -v -o bin/talkserial-arm6 src/*.go
+	env GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -v -o bin/talkserial-arm7 src/*.go
+
+release5:
+	env GOOS=linux GOARCH=arm GOARM=5 CGO_ENABLED=0 go build -v -o bin/talkserial-arm5 src/*.go
